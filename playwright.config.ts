@@ -1,5 +1,5 @@
+import 'dotenv/config';
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
   reportSlowTests: null,
@@ -11,21 +11,16 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', { open: 'never' }]],
+  use: {
+    viewport: { width: 1920, height: 1080 },
+  },
   projects : [
     {
-      name: 'jira',
-      testDir: './tests/jira',
+      name: 'saucedemo',
+      testDir: './tests/saucedemo',
       use: {
-        ...devices['Desktop Chrome'],
-        baseURL: 'https://fertavora.atlassian.net',
-        viewport: { width: 1920, height: 1080 },
-      }
-    },
-    { 
-      name: 'api',
-      testDir: './tests',
-      use: {
-        baseURL: 'http://localhost:3001',
+        baseURL: 'https://www.saucedemo.com',
+        testIdAttribute: 'data-test'
       }
     }
   ]

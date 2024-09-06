@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@playwright/test": "^1.43.1",
+    "@playwright/test": "^1.46.1",
     "@types/node": "^20.12.8"
   },
   "scripts": {
-    "test:web": "yarn playwright test --config duckduck.config.ts"
+    "test:jira": "yarn playwright test --project jira"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
