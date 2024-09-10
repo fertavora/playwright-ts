@@ -8,7 +8,7 @@
     "@types/node": "^20.12.8"
   },
   "scripts": {
-    "test:jira": "yarn playwright test --project jira"
+    "test:saucedemo": "yarn playwright test --project saucedemo"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
