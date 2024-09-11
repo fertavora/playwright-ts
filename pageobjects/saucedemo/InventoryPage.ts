@@ -1,8 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { PageObject } from "../PageObject";
-import { Cookie } from "../../types/cookie";
-import { ItemPage } from "./ItemPage";
-import { CartPage } from "./CartPage";
+import { ItemPage, CartPage } from "./";
 
 export class InventoryPage extends PageObject {
   readonly headerContainer: Locator;
@@ -15,7 +13,6 @@ export class InventoryPage extends PageObject {
   readonly shoppingCartBadge: Locator;
   readonly linkGoToCart: Locator;
   readonly sortingSelect: Locator;
-  readonly cookies: Cookie[];
   readonly allProductsNames: Locator;
   readonly allProductsPrices: Locator;
 
@@ -33,15 +30,6 @@ export class InventoryPage extends PageObject {
     this.sortingSelect = page.getByTestId('product-sort-container');
     this.allProductsNames = page.getByTestId('inventory-item-name');
     this.allProductsPrices = page.getByTestId('inventory-item-price');
-    
-    this.cookies = [
-      {
-        name: 'session-username',
-        value: 'standard_user',
-        domain: 'www.saucedemo.com',
-        path: '/'
-      }
-    ]
   }
 
   async goto(){

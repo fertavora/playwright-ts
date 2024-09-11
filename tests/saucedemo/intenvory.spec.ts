@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { InventoryPage } from "../../pageobjects/saucedemo/InventoryPage";
+import { InventoryPage } from "../../pageobjects/saucedemo";
 
 function isArraySorted(stringsArray: string[], order: 'asc' | 'desc') {
   if(order === 'desc') {

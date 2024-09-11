@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pageobjects/saucedemo/LogInPage';
-import { InventoryPage } from '../../pageobjects/saucedemo/InventoryPage';
+import { LoginPage, InventoryPage } from '../../pageobjects/saucedemo';
 const WRONG_PASSWORD = 'wrongpassword';
 
 test.describe('Log In Tests', () => {
