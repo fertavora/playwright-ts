@@ -1,0 +1,23 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: yarn
+    - name: Install Playwright Browsers
+      run: yarn playwright install --with-deps
+    - name: Run Playwright tests
+      run: yarn test:saucedemo
+      env:
+        SAUCE_USER: ${{ vars.SAUCE_USER }}
+        SAUCE_LOCKED_USER: ${{ vars.SAUCE_LOCKED_USER }}
+        SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
