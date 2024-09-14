@@ -11,7 +11,7 @@
     "test:saucedemo": "yarn playwright test --project saucedemo"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.4.1",
+    "@faker-js/faker": "^9.0.0",
     "dotenv": "^16.4.5"
   }
 }

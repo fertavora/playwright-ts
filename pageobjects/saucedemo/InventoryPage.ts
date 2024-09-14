@@ -15,6 +15,7 @@ export class InventoryPage extends PageObject {
   readonly sortingSelect: Locator;
   readonly allProductsNames: Locator;
   readonly allProductsPrices: Locator;
+  readonly item: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -30,6 +31,7 @@ export class InventoryPage extends PageObject {
     this.sortingSelect = page.getByTestId('product-sort-container');
     this.allProductsNames = page.getByTestId('inventory-item-name');
     this.allProductsPrices = page.getByTestId('inventory-item-price');
+    this.item = page.getByTestId('inventory-item');
   }
 
   async goto(){
