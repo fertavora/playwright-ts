@@ -11,7 +11,8 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['list']
+    ['list'],
+    ['html', { open: 'never' }]
   ],
   use: {
     viewport: { width: 1920, height: 1080 },

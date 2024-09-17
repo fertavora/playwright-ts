@@ -7,6 +7,8 @@ This library is used to set environment variables to run tests in local environm
 
 The credentials to sign into the app are stored in the environment variables.
 
+To run the test on GitHub Actions the environment variables are set as repository variables.
+
 ### faker
-This library is used to set test data dynamicallyto make sure each test run use different text input on different test scenarios.
+This library is used to set test data dynamically to make sure each test run use different text input on different test scenarios.
 
