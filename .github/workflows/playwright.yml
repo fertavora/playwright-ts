@@ -3,8 +3,8 @@ on:
   push:
     branches: [ main ]
 jobs:
-  test:
-    timeout-minutes: 60
+  playwright-test:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -14,10 +14,16 @@ jobs:
     - name: Install dependencies
       run: yarn
     - name: Install Playwright Browsers
-      run: yarn playwright install --with-deps
+      run: yarn playwright install --with-deps chromium
     - name: Run Playwright tests
       run: yarn test:saucedemo
       env:
         SAUCE_USER: ${{ vars.SAUCE_USER }}
         SAUCE_LOCKED_USER: ${{ vars.SAUCE_LOCKED_USER }}
         SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
