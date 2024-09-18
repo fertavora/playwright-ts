@@ -13,10 +13,12 @@ test.describe('Cart Test', () => {
     ]
   }]}});
 
-  test.beforeEach(async ({ page }) => {
-    cartPage = new CartPage(page);
-    await cartPage.goto();
-    await expect(cartPage.item).toHaveCount(3);
+  test.beforeEach('Going to the cart page', async ({ page }) => {
+    await test.step('Verifying the cart page is properly displayed', async () => {
+      cartPage = new CartPage(page);
+      await cartPage.goto();
+      await expect(cartPage.item).toHaveCount(3);
+    });
   });
 
   test('User clicks Continue Shopping button', async () => {

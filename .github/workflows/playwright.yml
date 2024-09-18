@@ -5,7 +5,7 @@ on:
 jobs:
   playwright-test:
     timeout-minutes: 15
-    runs-on: ubuntu-latest
+    runs-on: mcr.microsoft.com/playwright:v1.47.1
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -13,17 +13,11 @@ jobs:
         node-version: 20
     - name: Install dependencies
       run: yarn
-    - name: Install Playwright Browsers
-      run: yarn playwright install --with-deps chromium
+    # - name: Install Playwright Browsers
+    #   run: yarn playwright install --with-deps chromium
     - name: Run Playwright tests
       run: yarn test:saucedemo
       env:
         SAUCE_USER: ${{ vars.SAUCE_USER }}
         SAUCE_LOCKED_USER: ${{ vars.SAUCE_LOCKED_USER }}
         SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
-    - name: Deploy HTML report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: ${{ !cancelled() }}
-      with:
-        github_token: ${{ secrets.GH_PAT }}
-        publish_dir: ./playwright-report
