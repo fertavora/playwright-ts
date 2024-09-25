@@ -1,10 +1,8 @@
-import {test, expect } from "@playwright/test";
-import { CheckoutPage } from "../../pageobjects/saucedemo";
+import { test, expect } from "../../fixtures/base.ts";
 import { CheckoutInfo } from "../../types/checkoutInfo";
 import { faker } from '@faker-js/faker';
 
 test.describe('Checkout Tests', async () => {
-  let checkoutPage;
   test.use({ storageState: { cookies: [], origins: [{
     origin: 'https://www.saucedemo.com',
     localStorage: [
@@ -15,12 +13,11 @@ test.describe('Checkout Tests', async () => {
     ]
   }]}});
 
-  test.beforeEach(async ({ page }) => {
-    checkoutPage = new CheckoutPage(page);
+  test.beforeEach(async ({ checkoutPage }) => {
     await checkoutPage.goto();
   });
 
-  test('User submits the order', async () => {
+  test('User submits the order', async ({ checkoutPage }) => {
     const checkoutInfo: CheckoutInfo = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
@@ -35,12 +32,12 @@ test.describe('Checkout Tests', async () => {
     await expect(inventoryPage.item).toHaveCount(6);
   });
 
-  test('User clicks Cancel and returns to Cart', async () => {
+  test('User clicks Cancel and returns to Cart', async ({ checkoutPage }) => {
     const cartPage = await checkoutPage.clickCancelStepOne();
     await expect(cartPage.item).toHaveCount(3);
   });
 
-  test('User clicks Cancel and returns to Products', async () => {
+  test('User clicks Cancel and returns to Products', async ({ checkoutPage }) => {
     const checkoutInfo: CheckoutInfo = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),

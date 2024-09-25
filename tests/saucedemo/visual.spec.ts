@@ -1,15 +1,10 @@
-import test, { expect } from "@playwright/test";
-import { LoginPage } from "../../pageobjects/saucedemo";
+import { test, expect } from "../../fixtures/base.ts";
 
 test.describe('Visual Tests', () => {
-  let loginPage; let inventoryPage;
-  test.beforeEach(({ page }) => {
-    loginPage = new LoginPage(page);
-  });
   
-  test('Product images with soft assertion test', async ({ page }) => {
+  test('Product images with soft assertion test', async ({ loginPage }) => {
     await loginPage.goto();
-    inventoryPage = await loginPage.signIn(process.env.SAUCE_PROBLEM_USER, process.env.SAUCE_PASSWORD);
+    const inventoryPage = await loginPage.signIn(process.env.SAUCE_PROBLEM_USER, process.env.SAUCE_PASSWORD);
     await expect.soft(inventoryPage.allProductsImages.first()).toHaveScreenshot('sauce-labs-backpack.png');
     await expect.soft(inventoryPage.allProductsImages.nth(1)).toHaveScreenshot('sauce-labs-bike-light-img.png');
     await expect.soft(inventoryPage.allProductsImages.nth(2)).toHaveScreenshot('sauce-labs-bolt-t-shirt-img.png');
