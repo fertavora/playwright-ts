@@ -15,8 +15,6 @@ jobs:
         node-version: 20
     - name: Install dependencies
       run: yarn
-    # - name: Install Playwright Browsers
-    #   run: yarn playwright install --with-deps chromium
     - name: Run Playwright tests
       run: yarn test:saucedemo
       env:
