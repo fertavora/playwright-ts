@@ -5,7 +5,9 @@ on:
 jobs:
   playwright-test:
     timeout-minutes: 15
-    runs-on: mcr.microsoft.com/playwright:v1.47.1
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.47.1
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
