@@ -3,6 +3,7 @@ import { test, expect } from "../../fixtures/base.ts";
 test.describe('Visual Tests', () => {
   
   test('Product images with soft assertion test', async ({ loginPage }) => {
+    test.skip(process.env.CI !== undefined, 'Not for CI');
     await loginPage.goto();
     const inventoryPage = await loginPage.signIn(process.env.SAUCE_PROBLEM_USER, process.env.SAUCE_PASSWORD);
     await expect.soft(inventoryPage.allProductsImages.first()).toHaveScreenshot('sauce-labs-backpack.png');

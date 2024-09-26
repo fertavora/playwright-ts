@@ -2,7 +2,7 @@ import { test, expect } from "../../fixtures/base.ts";
 import { CheckoutInfo } from "../../types/checkoutInfo";
 import { faker } from '@faker-js/faker';
 
-test.describe('Checkout Tests', async () => {
+test.describe('Checkout Tests', () => {
   test.use({ storageState: { cookies: [], origins: [{
     origin: 'https://www.saucedemo.com',
     localStorage: [

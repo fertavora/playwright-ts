@@ -51,27 +51,27 @@ test.describe('Inventory Tests', () => {
   test('User goes to empty cart', async ({ inventoryPage }) => {
     const cartPage = await inventoryPage.clickGoToCart();
     await expect(cartPage.buttonCheckout).toBeVisible();
-    await expect(cartPage.buttonRemove).not.toBeVisible();
+    await expect(cartPage.buttonRemove).toBeHidden();
     await expect(cartPage.buttonContinue).toBeVisible();
   });
 
   test('User changes sorting to Z-A', async ({ inventoryPage }) => {
     await inventoryPage.sortingSelect.selectOption('za');
     const allNames = await inventoryPage.allProductsNames.allInnerTexts();
-    await expect(isArraySorted(allNames, 'desc'), 'The products names are not properly sorted!').toBeTruthy();
+    expect(isArraySorted(allNames, 'desc'), 'The products names are not properly sorted!').toBeTruthy();
   });
 
   test('User changes sorting to Price (high to low)', async ({ inventoryPage }) => {
     await inventoryPage.sortingSelect.selectOption('hilo');
     let allPrices = await inventoryPage.allProductsPrices.allInnerTexts();
-    allPrices = allPrices.map(price => parseFloat(price.replace('$', '')));
+    allPrices = allPrices.map((price: string) => parseFloat(price.replace('$', '')));
     expect(isArraySorted(allPrices, 'desc'), 'The products prices are not properly sorted!').toBeTruthy();
   });
 
   test('User changes sorting to Price (low to high)', async ({ inventoryPage }) => {
     await inventoryPage.sortingSelect.selectOption('lohi');
     let allPrices = await inventoryPage.allProductsPrices.allInnerTexts();
-    allPrices = allPrices.map(price => parseFloat(price.replace('$', '')));
+    allPrices = allPrices.map((price: string) => parseFloat(price.replace('$', '')));
     expect(isArraySorted(allPrices, 'asc'), 'The products prices are not properly sorted!').toBeTruthy();
   });
 });

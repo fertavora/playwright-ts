@@ -17,6 +17,7 @@ const config: PlaywrightTestConfig = {
   ],
   use: {
     viewport: { width: 1920, height: 1080 },
+    screenshot: 'on'
   },
   projects : [
     {

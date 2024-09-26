@@ -1,9 +1,10 @@
 import { test, expect } from "../../fixtures/base.ts";
+import { InventoryPage } from "../../pageobjects/saucedemo/InventoryPage.ts";
 const WRONG_PASSWORD = 'wrongpassword';
 
 test.describe('Log In Tests', () => {
   test('User logs into the application', async ({ loginPage }) => {
-    let inventoryPage;
+    let inventoryPage: InventoryPage;
     await test.step('User enters valid log in credentials', async () => {
       await loginPage.goto();
       inventoryPage = await loginPage.signIn(process.env.SAUCE_USER, process.env.SAUCE_PASSWORD);

@@ -4,13 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test:saucedemo": "yarn playwright test --project saucedemo"
+    "pretest": "tsc --noEmit && eslint tests/**",
+    "test": "yarn playwright test --project saucedemo"
   },
   "dependencies": {
+    "@eslint/js": "^9.11.1",
     "@faker-js/faker": "^9.0.0",
     "@playwright/test": "^1.47.1",
+    "@types/eslint__js": "^8.42.3",
     "@types/node": "^20.12.8",
     "dotenv": "^16.4.5",
-    "typescript": "^5.6.2"
+    "eslint": "^9.11.1",
+    "eslint-plugin-playwright": "^1.6.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.7.0"
   }
 }
