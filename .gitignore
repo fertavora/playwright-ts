@@ -5,5 +5,3 @@ node_modules/
 .env
 .DS_Store
 tests/saucedemo/visual.spec.ts-snapshots/*-darwin.png
-tests/saucedemo/visual.spec.ts-snapshots/sauce-labs-backpack-saucedemo-darwin.png
-tests/saucedemo/visual.spec.ts-snapshots/sauce-labs-bike-light-img-saucedemo-darwin.png
