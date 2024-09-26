@@ -1,14 +1,10 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage, InventoryPage } from '../../pageobjects/saucedemo';
+import { test, expect } from "../../fixtures/base.ts";
+import { InventoryPage } from "../../pageobjects/saucedemo/InventoryPage.ts";
 const WRONG_PASSWORD = 'wrongpassword';
 
 test.describe('Log In Tests', () => {
-  let loginPage; let inventoryPage;
-  test.beforeEach(({ page }) => {
-    loginPage = new LoginPage(page);
-  });
-
-  test('User logs into the application', async () => {
+  test('User logs into the application', async ({ loginPage }) => {
+    let inventoryPage: InventoryPage;
     await test.step('User enters valid log in credentials', async () => {
       await loginPage.goto();
       inventoryPage = await loginPage.signIn(process.env.SAUCE_USER, process.env.SAUCE_PASSWORD);
@@ -20,7 +16,7 @@ test.describe('Log In Tests', () => {
     });
   });
 
-  test('User is not able to log in with invalid credentials', async () => {
+  test('User is not able to log in with invalid credentials', async ({ loginPage }) => {
     await test.step('User enters invalid log in credentials', async () => {
       await loginPage.goto();
       await loginPage.signIn(process.env.SAUCE_USER, WRONG_PASSWORD);
@@ -32,7 +28,7 @@ test.describe('Log In Tests', () => {
     });
   });
 
-  test('User is not able to log in with locked user credentials', async () => {
+  test('User is not able to log in with locked user credentials', async ({ loginPage }) => {
     await test.step('User enters locked user log in credentials', async () => {
       await loginPage.goto();
       await loginPage.signIn(process.env.SAUCE_LOCKED_USER, process.env.SAUCE_PASSWORD);
@@ -44,9 +40,8 @@ test.describe('Log In Tests', () => {
     });
   });
 
-  test('User logs out of the application', async () => {
+  test('User logs out of the application', async ({ loginPage, inventoryPage }) => {
     await test.step('User logs out of the application', async() => {
-      inventoryPage = new InventoryPage(loginPage.page);
       await inventoryPage.goto();
       await inventoryPage.logOut();
       await expect(loginPage.inputUsername).toBeVisible();

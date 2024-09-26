@@ -12,10 +12,12 @@ const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 1 : undefined,
   reporter: [
     ['list'],
-    ['html', { open: 'never' }]
+    ['html', { open: 'never' }],
+    ['json', { outputFile: 'playwright-report/results.json' }]
   ],
   use: {
     viewport: { width: 1920, height: 1080 },
+    screenshot: 'on'
   },
   projects : [
     {
