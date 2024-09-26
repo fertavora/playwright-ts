@@ -16,8 +16,9 @@ jobs:
     - name: Install dependencies
       run: yarn
     - name: Run Playwright tests
-      run: yarn test:saucedemo
+      run: yarn test
       env:
         SAUCE_USER: ${{ vars.SAUCE_USER }}
         SAUCE_LOCKED_USER: ${{ vars.SAUCE_LOCKED_USER }}
         SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
+        SAUCE_PROBLEM_USER: ${{ vars.SAUCE_PROBLEM_USER }}
