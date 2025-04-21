@@ -1,13 +1,20 @@
+import envVar from "env-var";
+
 import { test, expect } from "../../fixtures/base.ts";
 import { InventoryPage } from "../../pageobjects/saucedemo/InventoryPage.ts";
+
 const WRONG_PASSWORD = 'wrongpassword';
 
 test.describe('Log In Tests', () => {
+  const sauceUser = envVar.get('SAUCE_USER').required().asString();
+  const saucePassword = envVar.get('SAUCE_PASSWORD').required().asString();
+  const sauceLockedUser = envVar.get('SAUCE_LOCKED_USER').required().asString();
+
   test('User logs into the application', async ({ loginPage }) => {
     let inventoryPage: InventoryPage;
     await test.step('User enters valid log in credentials', async () => {
       await loginPage.goto();
-      inventoryPage = await loginPage.signIn(process.env.SAUCE_USER, process.env.SAUCE_PASSWORD);
+      inventoryPage = await loginPage.signIn(sauceUser, saucePassword);
     });
 
     await test.step('Verify valid log in', async () => {
@@ -19,7 +26,7 @@ test.describe('Log In Tests', () => {
   test('User is not able to log in with invalid credentials', async ({ loginPage }) => {
     await test.step('User enters invalid log in credentials', async () => {
       await loginPage.goto();
-      await loginPage.signIn(process.env.SAUCE_USER, WRONG_PASSWORD);
+      await loginPage.signIn(sauceUser, WRONG_PASSWORD);
     });
 
     await test.step('Verify invalid log in', async () => {
@@ -31,7 +38,7 @@ test.describe('Log In Tests', () => {
   test('User is not able to log in with locked user credentials', async ({ loginPage }) => {
     await test.step('User enters locked user log in credentials', async () => {
       await loginPage.goto();
-      await loginPage.signIn(process.env.SAUCE_LOCKED_USER, process.env.SAUCE_PASSWORD);
+      await loginPage.signIn(sauceLockedUser, saucePassword);
     });
 
     await test.step('Verify locked user log in', async () => {

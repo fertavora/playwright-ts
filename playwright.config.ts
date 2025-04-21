@@ -9,11 +9,10 @@ const config: PlaywrightTestConfig = {
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? undefined : 1,
   reporter: [
     ['list'],
-    ['html', { open: 'never' }],
-    ['json', { outputFile: 'playwright-report/results.json' }]
+    ['html', { open: 'never' }]
   ],
   use: {
     viewport: { width: 1920, height: 1080 },

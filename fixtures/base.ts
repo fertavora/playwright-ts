@@ -1,7 +1,14 @@
 import { test as base } from '@playwright/test' 
 import { CartPage, CheckoutPage, InventoryPage, LoginPage } from "../pageobjects/saucedemo";
 
-export const test = base.extend({
+type CustomFixture = {
+  loginPage: LoginPage;
+  cartPage: CartPage;
+  checkoutPage: CheckoutPage;
+  inventoryPage: InventoryPage;
+}
+
+export const test = base.extend<CustomFixture>({
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
   },
