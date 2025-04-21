@@ -1,22 +1,17 @@
 import { test, expect } from "../../fixtures/base.ts";
 
-function isArraySorted(stringsArray: string[], order: 'asc' | 'desc') {
-  if(order === 'desc') {
-    for (let i = 0; i < stringsArray.length - 1; i++) {
-      if (stringsArray[i] < stringsArray[i + 1]) {
-          return false;
-      }
+type SortOrder = "asc" | "desc";
+
+function isArraySorted<T extends number | string>(array: T[], order: SortOrder = "asc"): boolean {
+  for (let i = 1; i < array.length; i++) {
+    if (
+      (order === "asc" && array[i] < array[i - 1]) ||
+      (order === "desc" && array[i] > array[i - 1])
+    ) {
+      return false;
     }
-    return true;
-  } else {
-    for (let i = 0; i < stringsArray.length - 1; i++) {
-      if (stringsArray[i] > stringsArray[i + 1]) {
-          return false;
-      }
-    }
-    return true;
   }
-  
+  return true;
 }
 
 test.describe('Inventory Tests', () => {
@@ -63,15 +58,15 @@ test.describe('Inventory Tests', () => {
 
   test('User changes sorting to Price (high to low)', async ({ inventoryPage }) => {
     await inventoryPage.sortingSelect.selectOption('hilo');
-    let allPrices = await inventoryPage.allProductsPrices.allInnerTexts();
-    allPrices = allPrices.map((price: string) => parseFloat(price.replace('$', '')));
-    expect(isArraySorted(allPrices, 'desc'), 'The products prices are not properly sorted!').toBeTruthy();
+    const allPrices = await inventoryPage.allProductsPrices.allInnerTexts();
+    const allPricesNumbers: number[] = allPrices.map((price: string) => parseFloat(price.replace('$', '')));
+    expect(isArraySorted(allPricesNumbers, 'desc'), 'The products prices are not properly sorted!').toBeTruthy();
   });
 
   test('User changes sorting to Price (low to high)', async ({ inventoryPage }) => {
     await inventoryPage.sortingSelect.selectOption('lohi');
-    let allPrices = await inventoryPage.allProductsPrices.allInnerTexts();
-    allPrices = allPrices.map((price: string) => parseFloat(price.replace('$', '')));
-    expect(isArraySorted(allPrices, 'asc'), 'The products prices are not properly sorted!').toBeTruthy();
+    const allPrices = await inventoryPage.allProductsPrices.allInnerTexts();
+    const allPricesNumbers = allPrices.map((price: string) => parseFloat(price.replace('$', '')));
+    expect(isArraySorted(allPricesNumbers), 'The products prices are not properly sorted!').toBeTruthy();
   });
 });
