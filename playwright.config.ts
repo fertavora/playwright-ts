@@ -7,24 +7,42 @@ const config: PlaywrightTestConfig = {
   expect: {
     timeout: 5000
   },
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   workers: process.env.CI ? undefined : 1,
-  reporter: [
-    ['list'],
-    ['html', { open: 'never' }]
-  ],
+  reporter: [ ['list'], ['html'] ],
   use: {
     viewport: { width: 1920, height: 1080 },
-    screenshot: 'on'
+    screenshot: 'on',
+    trace: 'on',
   },
-  projects : [
-    {
-      name: 'saucedemo',
+  projects: [
+    { 
+      name: 'Auth', 
       testDir: './tests/saucedemo',
+      testMatch: /\.*\.setup\.ts/,
       use: {
-        baseURL: 'https://www.saucedemo.com',
-        testIdAttribute: 'data-test'
+        testIdAttribute: 'data-test',
+        baseURL: process.env.SAUCE_BASE_URL,
+      }
+    },
+    {
+      name: 'Sauce Demo',
+      testDir: './tests/saucedemo',
+      testMatch: /\.*\.spec\.ts/,
+      use: {
+        storageState: 'playwright/.auth/inventoryAuth.json',
+        baseURL: process.env.SAUCE_BASE_URL,
+        testIdAttribute: 'data-test',
+      },
+      dependencies: ['Auth'],
+    },
+    {
+      name: 'Argenprop',
+      testDir: './tests/argenprop',
+      testMatch: /\.*\.spec\.ts/,
+      use: {
+        baseURL: 'https://www.argenprop.com'
       }
     }
   ]

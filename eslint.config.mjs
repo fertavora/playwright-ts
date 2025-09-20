@@ -18,7 +18,6 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/await-thenable': 'error',
-      'playwright/no-skipped-test': 'off'
     }
   }
 )

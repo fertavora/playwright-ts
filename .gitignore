@@ -2,6 +2,6 @@ node_modules/
 /test-results/
 /playwright-report/
 /playwright/.cache/
+/playwright/.auth/
 .env
 .DS_Store
-tests/saucedemo/visual.spec.ts-snapshots/*-darwin.png
