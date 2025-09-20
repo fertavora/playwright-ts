@@ -20,7 +20,7 @@ test.describe('Inventory', () => {
 
   test('Add item to cart', async ({ inventoryPage }) => {
     await inventoryPage.addItemToCartByButton(ITEM_NAME);
-    await expect(inventoryPage.cartBadge).toHaveText('1');
+    await expect(inventoryPage.headerPage.cartBadge).toHaveText('1');
 
     const cartPage: CartPage = await inventoryPage.goToCart();
     await expect(cartPage.cartItem).toHaveCount(1);
@@ -31,7 +31,7 @@ test.describe('Inventory', () => {
     const firstItem = inventoryPage.inventoryList.locator('.inventory_item').first();
     await expect(firstItem.getByText('Sauce Labs Onesie')).toBeVisible();
   });
-
+   
   test('Sort products by price high to low', async ({ inventoryPage }) => {
     await inventoryPage.selectSortingOption('Price (high to low)');
     const firstItem = inventoryPage.inventoryList.locator('.inventory_item').first();

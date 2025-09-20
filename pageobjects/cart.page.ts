@@ -1,10 +1,11 @@
 import type { Page, Locator } from '@playwright/test';
+import { SauceDemoPage } from './saucedemo.page';
 
-export class CartPage {
+export class CartPage extends SauceDemoPage {
   public readonly cartItem: Locator;
 
   constructor(public readonly page: Page) {
-    this.page = page;
+    super(page);
     this.cartItem = this.page.getByTestId('inventory-item');
   }    
 }

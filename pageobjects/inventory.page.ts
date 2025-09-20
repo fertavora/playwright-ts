@@ -1,20 +1,17 @@
 import type { Page, Locator } from '@playwright/test';
 import { ItemPage } from '../pageobjects/item.page';
 import { CartPage } from './cart.page';
+import { SauceDemoPage } from './saucedemo.page';
 
-export class InventoryPage {
+export class InventoryPage extends SauceDemoPage {
   public readonly inventoryList: Locator;
   private readonly itemDescription: Locator;
-  public readonly cartBadge: Locator;
-  public readonly cartLink: Locator;
   public readonly productSortSelect: Locator;
 
   constructor(public readonly page: Page) {
-    this.page = page;
+    super(page)
     this.inventoryList = this.page.getByTestId('inventory-list');
     this.itemDescription = this.page.getByTestId('inventory-item-description');
-    this.cartBadge = this.page.getByTestId('shopping-cart-badge');
-    this.cartLink = this.page.getByTestId('shopping-cart-link');
     this.productSortSelect = this.page.getByTestId('product-sort-container');
   }
 
@@ -37,7 +34,7 @@ export class InventoryPage {
   }
 
   async goToCart(): Promise<CartPage> {
-    await this.cartLink.click();
+    await this.headerPage.cartLink.click();
     return new CartPage(this.page);
   }
 
