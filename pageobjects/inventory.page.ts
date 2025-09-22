@@ -1,6 +1,5 @@
 import type { Page, Locator } from '@playwright/test';
 import { ItemPage } from '../pageobjects/item.page';
-import { CartPage } from './cart.page';
 import { SauceDemoPage } from './saucedemo.page';
 
 export class InventoryPage extends SauceDemoPage {
@@ -31,12 +30,7 @@ export class InventoryPage extends SauceDemoPage {
   
   async goto() {
     return this.page.goto('/inventory.html');
-  }
-
-  async goToCart(): Promise<CartPage> {
-    await this.headerPage.cartLink.click();
-    return new CartPage(this.page);
-  }
+  }  
 
   async selectSortingOption(option: string): Promise<void> {
     await this.productSortSelect.selectOption({label: option});

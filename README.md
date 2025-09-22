@@ -1,14 +1,23 @@
 # Playwright
 This project is an example on how to implement web application testing using [Playwright](https://playwright.dev/docs/intro).
 
-## External Libraries
-### dotenv
-This library is used to set environment variables to run tests in local environment.
+## Initial Setup
+From the command line in the project root run:
 
-The credentials to sign into the app are stored in the environment variables.
+`yarn`
 
-To run the test on GitHub Actions the environment variables are set as repository variables.
+## Projects
+### SauceDemo
+This project runs functional tests over the demo website provided by SauceLabs: [SauceDemo](https://saucedemo.com).
+#### How to run this project
+From the command line in the project root run:
 
-### faker
-This library is used to set test data dynamically to make sure each test run use different text input on different test scenarios.
+`yarn test:saucedemo`
+
+### Argenprop
+This project is a web scrapping project over the real estate website from Argentina: [Argenprop](https://www.argenprop.com/)
+#### How to run this project
+From the command line in the project root run:
+
+`yarn test:argenprop`
 

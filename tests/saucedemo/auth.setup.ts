@@ -21,6 +21,7 @@ test('Cart With Items', async ({ loginPage }) => {
 
   await inventoryPage.addItemToCartByButton('Sauce Labs Backpack');
   await inventoryPage.addItemToCartByButton('Sauce Labs Bike Light');
+  await inventoryPage.addItemToCartByButton('Sauce Labs Fleece Jacket');
 
   await inventoryPage.page.context().storageState({ path: cartWithItemsFile });
 });
