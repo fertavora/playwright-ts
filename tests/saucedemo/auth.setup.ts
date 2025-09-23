@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/pages.fixture';
+import { test, expect } from '../../fixtures/saucedemo.fixture';
 import path from 'path';
 
 const inventoryAuthFile = path.join(process.cwd(), './playwright/.auth/inventoryAuth.json');

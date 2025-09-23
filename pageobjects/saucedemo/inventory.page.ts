@@ -1,5 +1,5 @@
 import type { Page, Locator } from '@playwright/test';
-import { ItemPage } from '../pageobjects/item.page';
+import { ItemPage } from './item.page';
 import { SauceDemoPage } from './saucedemo.page';
 
 export class InventoryPage extends SauceDemoPage {

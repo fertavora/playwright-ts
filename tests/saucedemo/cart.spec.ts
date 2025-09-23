@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/pages.fixture';
+import { test, expect } from '../../fixtures/saucedemo.fixture';
 
 test.use({ storageState: 'playwright/.auth/cartWithItems.json' });
 

@@ -1,10 +1,10 @@
 import { test as base } from '@playwright/test';
-import { LoginPage } from '../pageobjects/login.page';
-import { InventoryPage } from '../pageobjects/inventory.page';
-import { ItemPage } from '../pageobjects/item.page';
-import { CartPage } from '../pageobjects/cart.page';
-import { CheckoutOnePage } from '../pageobjects/checkoutOne.page';
-import { CheckoutTwoPage } from '../pageobjects/checkoutTwo.page';
+import { LoginPage } from '../pageobjects/saucedemo/login.page';
+import { InventoryPage } from '../pageobjects/saucedemo/inventory.page';
+import { ItemPage } from '../pageobjects/saucedemo/item.page';
+import { CartPage } from '../pageobjects/saucedemo/cart.page';
+import { CheckoutOnePage } from '../pageobjects/saucedemo/checkoutOne.page';
+import { CheckoutTwoPage } from '../pageobjects/saucedemo/checkoutTwo.page';
 
 type SauceDemoPages = {
   loginPage: LoginPage;

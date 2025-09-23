@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { test, expect } from '../../fixtures/pages.fixture';
+import { test, expect } from '../../fixtures/saucedemo.fixture';
 import { CheckoutData } from '../../types/CheckoutData';
 
 test.use({ storageState: 'playwright/.auth/cartWithItems.json', trace: 'on' });

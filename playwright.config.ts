@@ -42,7 +42,7 @@ const config: PlaywrightTestConfig = {
       testDir: './tests/argenprop',
       testMatch: /\.*\.spec\.ts/,
       use: {
-        baseURL: 'https://www.argenprop.com'
+        baseURL: process.env.ARGENPROP_BASE_URL
       }
     }
   ]
