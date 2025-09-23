@@ -6,6 +6,7 @@ jobs:
   saucedemo-test:
     name: 'SauceDemo Functional Tests'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     container:
       image: mcr.microsoft.com/playwright:v1.55.0
     env:
@@ -30,6 +31,7 @@ jobs:
   argenprop-test:
     name: 'Argenprop Web Scrapping'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     container:
       image: mcr.microsoft.com/playwright:v1.55.0
     env:
