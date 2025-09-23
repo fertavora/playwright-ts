@@ -1,6 +1,7 @@
 import { test, expect } from '../../fixtures/pages.fixture';
 
-test.use({storageState: 'playwright/.auth/cartWithItems.json', trace: 'on'});
+test.use({ storageState: 'playwright/.auth/cartWithItems.json' });
+
 test.describe('Cart', () => {
   test.beforeEach(async ({ cartPage }) => {
     await cartPage.goto();

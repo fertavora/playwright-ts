@@ -35,4 +35,8 @@ export class InventoryPage extends SauceDemoPage {
   async selectSortingOption(option: string): Promise<void> {
     await this.productSortSelect.selectOption({label: option});
   }
+
+  async removeItemFromCartByButton(itemName: string): Promise<void> {
+    return this.itemDescription.filter({ hasText: itemName }).getByRole('button', { name: 'Remove' }).click();
+  }
 }

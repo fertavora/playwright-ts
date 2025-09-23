@@ -22,7 +22,7 @@ test.describe('Inventory', () => {
     await inventoryPage.addItemToCartByButton(ITEM_NAME);
     await expect(inventoryPage.headerPage.cartBadge).toHaveText('1');
 
-    const cartPage: CartPage = await inventoryPage.goToCart();
+    const cartPage: CartPage = await inventoryPage.headerPage.goToCart();
     await expect(cartPage.cartItem).toHaveCount(1);
   });
 
