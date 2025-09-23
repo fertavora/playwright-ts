@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.55.0
+    env:
+      SAUCE_BASE_URL: ${{ vars.SAUCE_BASE_URL }}
+      SAUCE_USERNAME: ${{ vars.SAUCE_USER }}
+      SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}  
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -17,15 +21,19 @@ jobs:
       run: yarn
     - name: Run Playwright tests
       run: yarn test:saucedemo
-      env:
-        SAUCE_BASE_URL: ${{ vars.SAUCE_BASE_URL }}
-        SAUCE_USERNAME: ${{ vars.SAUCE_USER }}
-        SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
+    - name: Upload HTML artifacts
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report-saucedemo
+        path: playwright-report/
   argenprop-test:
     name: 'Argenprop Web Scrapping'
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.55.0
+    env:
+      ARGENPROP_BASE_URL: ${{ vars.ARGENPROP_BASE_URL }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -35,5 +43,10 @@ jobs:
       run: yarn
     - name: Run Playwright tests
       run: yarn test:argenprop
-      env:
-        ARGENPROP_BASE_URL: ${{ vars.ARGENPROP_BASE_URL }}
+    - name: Upload HTML artifacts
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report-argenprop
+        path: playwright-report/
+      
