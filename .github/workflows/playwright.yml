@@ -1,7 +1,7 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 jobs:
   saucedemo-test:
     name: 'SauceDemo Functional Tests'
