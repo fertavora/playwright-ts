@@ -18,7 +18,7 @@ jobs:
     - name: Run Playwright tests
       run: yarn test:saucedemo
       env:
-        SAUCE_BASE_URL: ${{ vars.SAUCE_USER }}
+        SAUCE_BASE_URL: ${{ vars.SAUCE_BASE_URL }}
         SAUCE_USERNAME: ${{ vars.SAUCE_USER }}
         SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
   argenprop-test:
