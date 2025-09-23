@@ -1,9 +1,9 @@
 import type { Page, Locator } from '@playwright/test';
 import { CheckoutData } from '../types/CheckoutData';
 import { CartPage } from './cart.page';
-import { CartTwoPage } from './cartTwo.page';
+import { CheckoutTwoPage } from './checkoutTwo.page';
 
-export class CartOnePage {
+export class CheckoutOnePage {
   public readonly inputFirstName: Locator;
   public readonly inputLastName: Locator;
   public readonly inputZipCode: Locator;
@@ -25,9 +25,9 @@ export class CartOnePage {
     await this.inputZipCode.fill(checkoutData.zipCode);
   }
 
-  async clickContinue(): Promise<CartTwoPage> {
+  async clickContinue(): Promise<CheckoutTwoPage> {
     await this.buttonContinue.click();
-    return new CartTwoPage(this.page);
+    return new CheckoutTwoPage(this.page);
   }
 
   async clickCancel(): Promise<CartPage> {

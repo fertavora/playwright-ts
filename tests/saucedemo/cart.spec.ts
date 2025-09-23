@@ -12,4 +12,13 @@ test.describe('Cart', () => {
     await expect(inventoryPage.productSortSelect).toBeVisible();
     await expect(inventoryPage.page.getByRole('button', { name: 'Remove'})).toHaveCount(3);
   });
+
+  test('Start checkout from Cart page', async ({ cartPage }) => {
+    const cartOnePage = await cartPage.clickCheckout();
+    await expect(cartOnePage.inputFirstName).toBeVisible();
+    await expect(cartOnePage.inputLastName).toBeVisible();
+    await expect(cartOnePage.inputZipCode).toBeVisible();
+    await expect(cartOnePage.buttonContinue).toBeVisible();
+    await expect(cartOnePage.buttonCancel).toBeVisible();
+  });
 });

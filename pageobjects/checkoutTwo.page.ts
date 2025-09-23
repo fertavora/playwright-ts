@@ -1,8 +1,8 @@
 import type { Page, Locator } from '@playwright/test';
-import { CartOnePage } from './cartOne.page';
-import { CartCompletePage } from './cartComplete.page';
+import { CheckoutOnePage } from './checkoutOne.page';
+import { CheckoutCompletePage } from './checkoutComplete.page';
 
-export class CartTwoPage {
+export class CheckoutTwoPage {
   public readonly page: Page;
   public readonly buttonFinish: Locator;
   public readonly buttonCancel: Locator;
@@ -15,13 +15,13 @@ export class CartTwoPage {
     this.inventoryItem = this.page.getByTestId('inventory-item');
   }
 
-  async clickCancel(): Promise<CartOnePage> {
+  async clickCancel(): Promise<CheckoutOnePage> {
     await this.buttonCancel.click();
-    return new CartOnePage(this.page);
+    return new CheckoutOnePage(this.page);
   }
 
-  async clickFinish(): Promise<CartCompletePage> {
+  async clickFinish(): Promise<CheckoutCompletePage> {
     await this.buttonFinish.click();
-    return new CartCompletePage(this.page);
+    return new CheckoutCompletePage(this.page);
   }
 }

@@ -11,7 +11,7 @@ test.describe('Checkout', () => {
     zipCode: faker.location.zipCode()
   };
   
-  test('Complete checkout', async ({ inventoryPage }) => {
+  test('Complete checkout from Inventory', async ({ inventoryPage }) => {
     await inventoryPage.goto();
     const cartPage = await inventoryPage.headerPage.goToCart();
     const cartOnePage = await cartPage.clickCheckout();
@@ -21,7 +21,6 @@ test.describe('Checkout', () => {
     const cartCompletePage = await cartTwoPage.clickFinish();
     await expect(cartCompletePage.page.getByText('Thank you for your order!')).toBeVisible();
     await cartCompletePage.clickBackToHome();
-
     await expect(inventoryPage.productSortSelect).toBeVisible();
   });
 });

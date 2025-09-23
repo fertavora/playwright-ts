@@ -1,7 +1,7 @@
 import type { Page, Locator } from '@playwright/test';
 import { InventoryPage  } from './inventory.page';
 
-export class CartCompletePage {
+export class CheckoutCompletePage {
   public readonly page: Page;
   public readonly buttonBackToHome: Locator;
 

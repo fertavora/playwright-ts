@@ -1,6 +1,6 @@
 import type { Page, Locator } from '@playwright/test';
 import { InventoryPage } from './inventory.page';
-import { CartOnePage } from './cartOne.page';
+import { CheckoutOnePage } from './checkoutOne.page';
 
 export class CartPage {
   public readonly cartItem: Locator;
@@ -23,8 +23,8 @@ export class CartPage {
     return new InventoryPage(this.page);
   }
 
-  async clickCheckout(): Promise<CartOnePage> {
+  async clickCheckout(): Promise<CheckoutOnePage> {
     await this.buttonCheckout.click();
-    return new CartOnePage(this.page);
+    return new CheckoutOnePage(this.page);
   }
 }
