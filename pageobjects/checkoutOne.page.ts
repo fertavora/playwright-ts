@@ -19,6 +19,10 @@ export class CheckoutOnePage {
     this.buttonCancel = this.page.getByTestId('cancel');
   }
 
+  async goto(): Promise<void> {
+    await this.page.goto('/checkout-step-one.html');
+  }
+
   async fillForm(checkoutData: CheckoutData): Promise<void> {
     await this.inputFirstName.fill(checkoutData.firstName);
     await this.inputLastName.fill(checkoutData.lastName);

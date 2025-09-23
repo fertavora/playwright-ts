@@ -3,12 +3,16 @@ import { LoginPage } from '../pageobjects/login.page';
 import { InventoryPage } from '../pageobjects/inventory.page';
 import { ItemPage } from '../pageobjects/item.page';
 import { CartPage } from '../pageobjects/cart.page';
+import { CheckoutOnePage } from '../pageobjects/checkoutOne.page';
+import { CheckoutTwoPage } from '../pageobjects/checkoutTwo.page';
 
 type SauceDemoPages = {
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
   itemPage: ItemPage;
   cartPage: CartPage;
+  checkoutOnePage: CheckoutOnePage;
+  checkoutTwoPage: CheckoutTwoPage;
 }
 export const test = base.extend<SauceDemoPages>({
   loginPage: async({ page }, use) => {
@@ -22,6 +26,12 @@ export const test = base.extend<SauceDemoPages>({
   },
   cartPage: async({ page }, use) => {
     await use(new CartPage(page));
+  },
+  checkoutOnePage: async({ page }, use) => {
+    await use(new CheckoutOnePage(page));
+  },
+  checkoutTwoPage: async({ page }, use) => {
+    await use(new CheckoutTwoPage(page));
   }
 });
 

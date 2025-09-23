@@ -23,4 +23,17 @@ test.describe('Checkout', () => {
     await cartCompletePage.clickBackToHome();
     await expect(inventoryPage.productSortSelect).toBeVisible();
   });
+
+  test('Go back to Cart from Checkout Information', async ({ checkoutOnePage }) => {
+    await checkoutOnePage.goto();
+    const cartPage = await checkoutOnePage.clickCancel();
+    await expect(cartPage.cartItem).toHaveCount(3);
+  });
+
+  test('Go back to Inventory from Checkout Overview', async ({ checkoutTwoPage }) => {
+    await checkoutTwoPage.goto();
+    const inventoryPage = await checkoutTwoPage.clickCancel();
+    await expect(inventoryPage.productSortSelect).toBeVisible();
+    await expect(inventoryPage.page.getByRole('button', { name: 'Remove'})).toHaveCount(3);
+  });
 });

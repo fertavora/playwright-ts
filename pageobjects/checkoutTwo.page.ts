@@ -1,5 +1,5 @@
 import type { Page, Locator } from '@playwright/test';
-import { CheckoutOnePage } from './checkoutOne.page';
+import { InventoryPage } from './inventory.page';
 import { CheckoutCompletePage } from './checkoutComplete.page';
 
 export class CheckoutTwoPage {
@@ -15,9 +15,13 @@ export class CheckoutTwoPage {
     this.inventoryItem = this.page.getByTestId('inventory-item');
   }
 
-  async clickCancel(): Promise<CheckoutOnePage> {
+  async goto(): Promise<void> {
+    await this.page.goto('/checkout-step-two.html');
+  }
+
+  async clickCancel(): Promise<InventoryPage> {
     await this.buttonCancel.click();
-    return new CheckoutOnePage(this.page);
+    return new InventoryPage(this.page);
   }
 
   async clickFinish(): Promise<CheckoutCompletePage> {
