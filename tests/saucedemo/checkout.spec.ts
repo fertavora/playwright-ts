@@ -1,52 +1,39 @@
-import { test, expect } from "../../fixtures/base.ts";
-import { CheckoutInfo } from "../../types/checkoutInfo";
 import { faker } from '@faker-js/faker';
+import { test, expect } from '../../fixtures/saucedemo.fixture';
+import { CheckoutData } from '../../types/CheckoutData';
 
-test.describe('Checkout Tests', () => {
-  test.use({ storageState: { cookies: [], origins: [{
-    origin: 'https://www.saucedemo.com',
-    localStorage: [
-      {
-        name: 'cart-contents',
-        value: '[4,1,2]'
-      }
-    ]
-  }]}});
+test.use({ storageState: 'playwright/.auth/cartWithItems.json', trace: 'on' });
+test.describe('Checkout', () => {
 
-  test.beforeEach(async ({ checkoutPage }) => {
-    await checkoutPage.goto();
+  const checkoutData: CheckoutData = {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    zipCode: faker.location.zipCode()
+  };
+  
+  test('Complete checkout from Inventory', async ({ inventoryPage }) => {
+    await inventoryPage.goto();
+    const cartPage = await inventoryPage.headerPage.goToCart();
+    const cartOnePage = await cartPage.clickCheckout();
+    await cartOnePage.fillForm(checkoutData);
+    const cartTwoPage = await cartOnePage.clickContinue();
+    await expect(cartTwoPage.inventoryItem).toHaveCount(3);
+    const cartCompletePage = await cartTwoPage.clickFinish();
+    await expect(cartCompletePage.page.getByText('Thank you for your order!')).toBeVisible();
+    await cartCompletePage.clickBackToHome();
+    await expect(inventoryPage.productSortSelect).toBeVisible();
   });
 
-  test('User submits the order', async ({ checkoutPage }) => {
-    const checkoutInfo: CheckoutInfo = {
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      postalCode: faker.location.zipCode()
-    }
-    await checkoutPage.fillCheckoutInfo(checkoutInfo);
-    await checkoutPage.clickContinue();
-    await expect(checkoutPage.item).toHaveCount(3);
-    await checkoutPage.clickFinish();
-    await expect(checkoutPage.textComplete).toHaveText('Thank you for your order!');
-    const inventoryPage = await checkoutPage.clickBackToProducts();
-    await expect(inventoryPage.item).toHaveCount(6);
+  test('Go back to Cart from Checkout Information', async ({ checkoutOnePage }) => {
+    await checkoutOnePage.goto();
+    const cartPage = await checkoutOnePage.clickCancel();
+    await expect(cartPage.cartItem).toHaveCount(3);
   });
 
-  test('User clicks Cancel and returns to Cart', async ({ checkoutPage }) => {
-    const cartPage = await checkoutPage.clickCancelStepOne();
-    await expect(cartPage.item).toHaveCount(3);
+  test('Go back to Inventory from Checkout Overview', async ({ checkoutTwoPage }) => {
+    await checkoutTwoPage.goto();
+    const inventoryPage = await checkoutTwoPage.clickCancel();
+    await expect(inventoryPage.productSortSelect).toBeVisible();
+    await expect(inventoryPage.page.getByRole('button', { name: 'Remove'})).toHaveCount(3);
   });
-
-  test('User clicks Cancel and returns to Products', async ({ checkoutPage }) => {
-    const checkoutInfo: CheckoutInfo = {
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      postalCode: faker.location.zipCode()
-    }
-    await checkoutPage.fillCheckoutInfo(checkoutInfo);
-    await checkoutPage.clickContinue();
-    await expect(checkoutPage.item).toHaveCount(3);
-    const inventoryPage = await checkoutPage.clickCancelStepTwo();
-    await expect(inventoryPage.item).toHaveCount(6);
-  })
-})
+});

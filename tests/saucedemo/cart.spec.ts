@@ -1,35 +1,24 @@
-import { test, expect } from "../../fixtures/base.ts";
+import { test, expect } from '../../fixtures/saucedemo.fixture';
 
-test.describe('Cart Test', () => {
-  test.use({ storageState: { cookies: [], origins: [{
-    origin: 'https://www.saucedemo.com',
-    localStorage: [
-      {
-        name: 'cart-contents',
-        value: '[4,1,2]'
-      }
-    ]
-  }]}});
+test.use({ storageState: 'playwright/.auth/cartWithItems.json' });
 
-  test.beforeEach('Going to the cart page', async ({ cartPage }) => {
-    await test.step('Verifying the cart page is properly displayed', async () => {
-      await cartPage.goto();
-      await expect(cartPage.item).toHaveCount(3);
-    });
+test.describe('Cart', () => {
+  test.beforeEach(async ({ cartPage }) => {
+    await cartPage.goto();
   });
 
-  test('User clicks Continue Shopping button', async ({ cartPage }) => {
-    const inventoryPage = await cartPage.clickContinue();
-    await expect(inventoryPage.inventoryList).toBeVisible();
+  test('Continue Shopping from Cart page', async ({ cartPage }) => {
+    const inventoryPage = await cartPage.clickContinueShopping();
+    await expect(inventoryPage.productSortSelect).toBeVisible();
+    await expect(inventoryPage.page.getByRole('button', { name: 'Remove'})).toHaveCount(3);
   });
 
-  test('User clicks Remove button', async ({ cartPage }) => {
-    await cartPage.clickRemove();
-    await expect(cartPage.item).toHaveCount(2);
-  });
-
-  test('User clicks Checkout button', async ({ cartPage }) => {
-    const checkoutPage = await cartPage.clickCheckout();
-    await expect(checkoutPage.checkoutContainer).toBeVisible();
+  test('Start checkout from Cart page', async ({ cartPage }) => {
+    const cartOnePage = await cartPage.clickCheckout();
+    await expect(cartOnePage.inputFirstName).toBeVisible();
+    await expect(cartOnePage.inputLastName).toBeVisible();
+    await expect(cartOnePage.inputZipCode).toBeVisible();
+    await expect(cartOnePage.buttonContinue).toBeVisible();
+    await expect(cartOnePage.buttonCancel).toBeVisible();
   });
 });
