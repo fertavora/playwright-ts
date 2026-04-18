@@ -28,27 +28,3 @@ jobs:
       with:
         name: playwright-report-saucedemo
         path: playwright-report/
-  argenprop-test:
-    name: 'Argenprop Web Scrapping'
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    container:
-      image: mcr.microsoft.com/playwright:v1.55.0
-    env:
-      ARGENPROP_BASE_URL: ${{ vars.ARGENPROP_BASE_URL }}
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    - name: Install dependencies
-      run: yarn
-    - name: Run Playwright tests
-      run: yarn test:argenprop
-    - name: Upload HTML artifacts
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report-argenprop
-        path: playwright-report/
-      

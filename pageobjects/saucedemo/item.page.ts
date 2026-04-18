@@ -6,12 +6,14 @@ export class ItemPage extends SauceDemoPage {
   
   private readonly buttonBackToProducts: Locator;
   public readonly buttonAddToCart: Locator;
+  public readonly buttonRemoveFromCart: Locator;
   public readonly titleItem: Locator;
 
   constructor(public readonly page: Page) {
     super(page);
     this.buttonBackToProducts = this.page.getByTestId('back-to-products');
     this.buttonAddToCart = this.page.getByTestId('add-to-cart');
+    this.buttonRemoveFromCart = this.page.getByTestId('remove');
     this.titleItem = this.page.getByTestId('inventory-item-name');
   }
 

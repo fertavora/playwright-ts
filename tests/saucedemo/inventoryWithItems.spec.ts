@@ -1,5 +1,5 @@
 import { test, expect } from '../../fixtures/saucedemo.fixture';
-import { CartPage } from '../../pageobjects/cart.page';
+import { CartPage } from '../../pageobjects/saucedemo/cart.page';
 
 test.use({ storageState: 'playwright/.auth/cartWithItems.json' });
 test.describe('Inventory with items in cart', () => {
