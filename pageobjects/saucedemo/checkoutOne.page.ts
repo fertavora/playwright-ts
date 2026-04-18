@@ -1,5 +1,5 @@
 import type { Page, Locator } from '@playwright/test';
-import { CheckoutData } from '../types/CheckoutData';
+import { CheckoutData } from '../../types/CheckoutData';
 import { CartPage } from './cart.page';
 import { CheckoutTwoPage } from './checkoutTwo.page';
 
@@ -9,6 +9,7 @@ export class CheckoutOnePage {
   public readonly inputZipCode: Locator;
   public readonly buttonContinue: Locator;
   public readonly buttonCancel: Locator;
+  public readonly errorMessage: Locator;
 
   constructor(public readonly page: Page) {
     this.page = page;
@@ -17,6 +18,7 @@ export class CheckoutOnePage {
     this.inputZipCode = this.page.getByTestId('postalCode');
     this.buttonContinue = this.page.getByTestId('continue');
     this.buttonCancel = this.page.getByTestId('cancel');
+    this.errorMessage = this.page.getByTestId('error');
   }
 
   async goto(): Promise<void> {

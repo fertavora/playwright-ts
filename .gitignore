@@ -5,3 +5,4 @@ node_modules/
 /playwright/.auth/
 .env
 .DS_Store
+results.json

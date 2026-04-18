@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { test, expect } from '../../fixtures/saucedemo.fixture';
 import { CheckoutData } from '../../types/CheckoutData';
 
-test.use({ storageState: 'playwright/.auth/cartWithItems.json', trace: 'on' });
+test.use({ storageState: 'playwright/.auth/cartWithItems.json' });
 test.describe('Checkout', () => {
 
   const checkoutData: CheckoutData = {
@@ -24,6 +24,30 @@ test.describe('Checkout', () => {
     await expect(inventoryPage.productSortSelect).toBeVisible();
   });
 
+  test('Empty form shows First Name required error', async ({ checkoutOnePage }) => {
+    await checkoutOnePage.goto();
+    await checkoutOnePage.buttonContinue.click();
+    await expect(checkoutOnePage.errorMessage).toBeVisible();
+    await expect(checkoutOnePage.errorMessage).toContainText('First Name is required');
+  });
+
+  test('Missing last name shows Last Name required error', async ({ checkoutOnePage }) => {
+    await checkoutOnePage.goto();
+    await checkoutOnePage.inputFirstName.fill('John');
+    await checkoutOnePage.buttonContinue.click();
+    await expect(checkoutOnePage.errorMessage).toBeVisible();
+    await expect(checkoutOnePage.errorMessage).toContainText('Last Name is required');
+  });
+
+  test('Missing zip code shows Postal Code required error', async ({ checkoutOnePage }) => {
+    await checkoutOnePage.goto();
+    await checkoutOnePage.inputFirstName.fill('John');
+    await checkoutOnePage.inputLastName.fill('Doe');
+    await checkoutOnePage.buttonContinue.click();
+    await expect(checkoutOnePage.errorMessage).toBeVisible();
+    await expect(checkoutOnePage.errorMessage).toContainText('Postal Code is required');
+  });
+
   test('Go back to Cart from Checkout Information', async ({ checkoutOnePage }) => {
     await checkoutOnePage.goto();
     const cartPage = await checkoutOnePage.clickCancel();
@@ -35,5 +59,26 @@ test.describe('Checkout', () => {
     const inventoryPage = await checkoutTwoPage.clickCancel();
     await expect(inventoryPage.productSortSelect).toBeVisible();
     await expect(inventoryPage.page.getByRole('button', { name: 'Remove'})).toHaveCount(3);
+  });
+});
+
+test.describe('Checkout Overview', () => {
+  test.use({ storageState: 'playwright/.auth/cartWithItems.json' });
+
+  test.beforeEach(async ({ checkoutTwoPage }) => {
+    await checkoutTwoPage.goto();
+  });
+
+  test('Shows all 3 item names in summary', async ({ checkoutTwoPage }) => {
+    await expect(checkoutTwoPage.itemName).toHaveCount(3);
+    await expect(checkoutTwoPage.itemName.getByText('Sauce Labs Backpack')).toBeVisible();
+    await expect(checkoutTwoPage.itemName.getByText('Sauce Labs Bike Light')).toBeVisible();
+    await expect(checkoutTwoPage.itemName.getByText('Sauce Labs Fleece Jacket')).toBeVisible();
+  });
+
+  test('Shows correct subtotal, tax and total', async ({ checkoutTwoPage }) => {
+    await expect(checkoutTwoPage.subtotalLabel).toContainText('Item total: $89.97');
+    await expect(checkoutTwoPage.taxLabel).toContainText('Tax: $7.20');
+    await expect(checkoutTwoPage.totalLabel).toContainText('Total: $97.17');
   });
 });

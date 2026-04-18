@@ -1,0 +1,69 @@
+name: Playwright Nightly Tests
+
+on:
+  schedule:
+    - cron: '0 21 * * 1-5'  # 10 PM CET (UTC+1) = 21:00 UTC, lunes-viernes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  saucedemo-nightly:
+    name: 'SauceDemo Nightly Tests'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: mcr.microsoft.com/playwright:v1.55.0
+    env:
+      SAUCE_BASE_URL: ${{ vars.SAUCE_BASE_URL }}
+      SAUCE_USERNAME: ${{ vars.SAUCE_USERNAME }}
+      SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install dependencies
+      run: yarn
+    - name: Run Playwright tests
+      run: yarn test:saucedemo
+    - name: Copy report to pw-reports
+      if: ${{ !cancelled() }}
+      run: |
+        rm -rf pw-reports
+        cp -r playwright-report pw-reports
+    - name: Commit report to repository
+      if: ${{ !cancelled() }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git add pw-reports/
+        git diff --staged --quiet || git commit -m "chore: update playwright nightly report [skip ci]"
+        git push
+    - name: Upload Pages artifact
+      if: ${{ !cancelled() }}
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: pw-reports/
+
+  deploy-pages:
+    name: 'Deploy to GitHub Pages'
+    needs: saucedemo-nightly
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
