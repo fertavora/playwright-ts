@@ -20,6 +20,7 @@ jobs:
     env:
       SAUCE_BASE_URL: ${{ vars.SAUCE_BASE_URL }}
       SAUCE_USERNAME: ${{ vars.SAUCE_USERNAME }}
+      SAUCE_USERNAME_ERROR: ${{ vars.SAUCE_USERNAME_ERROR }}
       SAUCE_PASSWORD: ${{ vars.SAUCE_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
@@ -40,6 +41,7 @@ jobs:
     - name: Commit report to repository
       if: ${{ !cancelled() }}
       run: |
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
