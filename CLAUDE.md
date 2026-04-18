@@ -31,7 +31,10 @@ yarn playwright show-report
 
 Copy `.env` or set these before running:
 - `SAUCE_BASE_URL` — SauceDemo base URL (e.g. `https://saucedemo.com`)
-- `SAUCE_USERNAME` / `SAUCE_USERNAME_ERROR` / `SAUCE_PASSWORD` — SauceDemo credentials
+- `SAUCE_USERNAME` — standard user
+- `SAUCE_USERNAME_ERROR` — error user
+- `SAUCE_USERNAME_LOCKED` — locked out user
+- `SAUCE_PASSWORD` — password for all users
 
 ## Architecture
 
@@ -66,4 +69,12 @@ Shared TypeScript types live in [types/](types/) (e.g. `CheckoutData`).
 
 ### CI
 
-GitHub Actions runs on PRs to `main`. The `SAUCE_BASE_URL`, `SAUCE_USERNAME`, and `SAUCE_PASSWORD` variables must be set in the repository's GitHub Actions vars.
+Two GitHub Actions workflows:
+- **[playwright.yml](.github/workflows/playwright.yml)** — runs on PRs to `main`
+- **[playwright-nightly.yml](.github/workflows/playwright-nightly.yml)** — runs Mon–Fri at 22:00 CET, also triggerable manually (`workflow_dispatch`). Commits the HTML report to `docs/reports/saucedemo/` and deploys to GitHub Pages.
+
+All five env vars (`SAUCE_BASE_URL`, `SAUCE_USERNAME`, `SAUCE_USERNAME_ERROR`, `SAUCE_USERNAME_LOCKED`, `SAUCE_PASSWORD`) must be set in GitHub Actions → Variables.
+
+### GitHub Pages
+
+Landing page lives in [docs/index.html](docs/index.html). The nightly workflow writes the Playwright report to `docs/reports/saucedemo/` and deploys the full `docs/` folder to Pages. Configure in repo Settings → Pages → Source → GitHub Actions.
